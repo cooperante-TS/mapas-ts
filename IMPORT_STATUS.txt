@@ -6,12 +6,10 @@ Imported and versioned:
 - /paises/ entrypoint, CSS and mapa-pais.js;
 - web-optimized ADM1 GeoJSON for El Salvador, Nicaragua, Guatemala, Senegal and Burkina Faso;
 - lightweight local globe GeoJSON containing the five countries that are interactive in the TS globe;
-- first ODS icon asset.
+- all 12 required ODS deployment assets in both /globo/assets/ods/ and /paises/assets/ods/.
 
-Still pending:
-- remaining ODS PNG assets;
-- non-essential documentation/backups from the institutional package.
+The exact canonical originals, including the full world GeoJSON and original ODS PNG files, remain archived and verified in institutional Google Drive. Selected large web assets are intentionally optimized derivatives for deployment and do not replace those canonical originals.
 
-The exact canonical originals, including the full world GeoJSON, remain archived and verified in institutional Google Drive. The lightweight derivatives in GitHub are deployment assets and do not replace those canonical originals.
+Source import to the institutional GitHub repository is complete. Non-essential archival documentation remains in institutional Drive and is not required for deployment.
 
-Production cutover has not been performed.
+Production cutover has not been performed because the Cloudflare account is not exposed through the currently connected tools.
