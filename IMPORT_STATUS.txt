@@ -1,0 +1,1 @@
+Canonical source package verified on 2026-09-14. Full import is pending because the current connector does not accept the large binary and GeoJSON payloads in one operation.
