@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mapa territorial TS</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="assets/mapa-pais.css" />
+</head>
+<body>
+  <main class="ts-country-map-page">
+    <section class="ts-country-map-wrapper" aria-label="Mapa territorial de Treball Solidari">
+      <div id="ts-country-map"></div>
+
+      <aside id="ts-region-panel" class="ts-region-panel" hidden>
+        <button id="ts-panel-close" class="ts-panel-close" type="button" aria-label="Cerrar ficha">
+          ×
+        </button>
+
+        <div id="ts-region-panel-content"></div>
+      </aside>
+
+      <div id="ts-map-hint" class="ts-map-hint">
+        Toca las zonas resaltadas
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="assets/mapa-pais.js"></script>
+</body>
+</html>
