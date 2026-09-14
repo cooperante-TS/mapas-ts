@@ -1,1 +1,15 @@
-Canonical source package verified on 2026-09-14. Full import is pending because the current connector does not accept the large binary and GeoJSON payloads in one operation.
+Canonical source package verified on 2026-09-14.
+
+Imported and versioned:
+- root landing page;
+- /globo/ entrypoint, CSS and JavaScript;
+- /paises/ entrypoint, CSS and mapa-pais.js;
+- web-optimized ADM1 GeoJSON for El Salvador, Nicaragua, Guatemala, Senegal and Burkina Faso;
+- first ODS icon asset.
+
+Still pending:
+- global countries GeoJSON required by /globo/;
+- remaining ODS PNG assets;
+- non-essential documentation/backups from the institutional package.
+
+The exact canonical originals remain archived and verified in institutional Google Drive. Production cutover has not been performed.
