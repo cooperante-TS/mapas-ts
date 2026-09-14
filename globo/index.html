@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Globo interactivo TS</title>
+
+  <link rel="stylesheet" href="assets/globo.css" />
+</head>
+<body>
+  <main class="ts-globe-page">
+    <section class="ts-globe-wrapper" aria-label="Globo interactivo de países donde trabaja Treball Solidari">
+      <div id="ts-globe"></div>
+
+      <div class="ts-globe-hint" id="ts-globe-hint">
+        Arrastra el globo y toca los países resaltados
+      </div>
+
+      <aside id="ts-country-panel" class="ts-country-panel" hidden>
+        <button id="ts-panel-close" class="ts-panel-close" type="button" aria-label="Cerrar ficha">
+          ×
+        </button>
+
+        <div id="ts-country-panel-content"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/globe.gl"></script>
+  <script src="assets/globo.js"></script>
+</body>
+</html>
