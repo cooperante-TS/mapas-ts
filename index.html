@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mapas Treball Solidari</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ts-cream: #edeec7;
+      --ts-sage: #c8cfac;
+      --ts-lime: #d8d300;
+      --ts-olive: #88987d;
+      --ts-green: #405943;
+      --ts-green-dark: #2f4232;
+      --ts-black: #111111;
+      --ts-white: #ffffff;
+      --ts-soft-white: #f7f7ef;
+
+      --font-title: "ChunkFive", "Roboto Slab", Georgia, serif;
+      --font-subtitle: "Coolvetica", "Arial Black", Arial, sans-serif;
+      --font-body: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at 18% 8%, rgba(64, 89, 67, 0.10), transparent 28%),
+        radial-gradient(circle at 85% 28%, rgba(216, 211, 0, 0.12), transparent 28%),
+        #ffffff;
+      color: var(--ts-black);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(17, 17, 17, 0.025) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(17, 17, 17, 0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+    }
+
+    main {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 76px;
+    }
+
+    .hero {
+      position: relative;
+      margin-bottom: 22px;
+      padding: clamp(30px, 6vw, 64px);
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 82% 16%, rgba(216, 211, 0, 0.30), transparent 28%),
+        linear-gradient(135deg, var(--ts-green), var(--ts-green-dark));
+      color: #ffffff;
+      box-shadow: 0 26px 70px rgba(17, 17, 17, 0.22);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08)),
+        radial-gradient(circle at 10% 88%, rgba(237, 238, 199, 0.13), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--ts-lime);
+      color: var(--ts-green);
+      font-family: var(--font-subtitle);
+      font-size: 0.76rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 940px;
+      font-family: var(--font-title);
+      font-size: clamp(2.35rem, 6.4vw, 6rem);
+      line-height: 0.9;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 20px 0 0;
+      color: rgba(255, 255, 255, 0.90);
+      font-size: 1.05rem;
+      line-height: 1.58;
+    }
+
+    .quick-links {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0 34px;
+      padding: 10px;
+      border: 1px solid rgba(17, 17, 17, 0.10);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 36px rgba(17, 17, 17, 0.08);
+    }
+
+    .quick-links a {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--ts-black);
+      border: 1px solid rgba(17, 17, 17, 0.10);
+      text-decoration: none;
+      font-family: var(--font-subtitle);
+      font-size: 0.86rem;
+      font-weight: 950;
+      letter-spacing: 0.01em;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .quick-links a:hover {
+      transform: translateY(-1px);
+      background: var(--ts-green);
+      color: #ffffff;
+    }
+
+    .map-card {
+      margin-bottom: 36px;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 24px 70px rgba(17, 17, 17, 0.13);
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      overflow: hidden;
+    }
+
+    .map-card-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: start;
+      padding: clamp(22px, 4vw, 32px);
+      background:
+        radial-gradient(circle at 12% 20%, rgba(216, 211, 0, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(64, 89, 67, 0.05), transparent),
+        #ffffff;
+      border-bottom: 1px solid rgba(17, 17, 17, 0.10);
+    }
+
+    .map-card-header h2 {
+      margin: 0;
+      max-width: 820px;
+      font-family: var(--font-title);
+      font-size: clamp(1.75rem, 3vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--ts-black);
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .map-card-header p {
+      max-width: 760px;
+      margin: 10px 0 0;
+      color: rgba(17, 17, 17, 0.68);
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    .map-tag {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--ts-green);
+      color: #ffffff;
+      font-family: var(--font-subtitle);
+      font-size: 0.74rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      white-space: nowrap;
+      box-shadow: 0 9px 20px rgba(17, 17, 17, 0.12);
+    }
+
+    .map-frame-wrap {
+      position: relative;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(64, 89, 67, 0.08), transparent 35%),
+        #ffffff;
+    }
+
+    .map-preview {
+      width: 100%;
+      height: 680px;
+      border: 0;
+      display: block;
+      background: transparent;
+    }
+
+    .embed-block {
+      padding: clamp(20px, 4vw, 28px);
+      background:
+        linear-gradient(180deg, rgba(64, 89, 67, 0.05), rgba(255, 255, 255, 1)),
+        #ffffff;
+      border-top: 1px solid rgba(17, 17, 17, 0.10);
+    }
+
+    .embed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .embed-block label {
+      display: block;
+      color: var(--ts-black);
+      font-family: var(--font-subtitle);
+      font-weight: 950;
+      letter-spacing: 0.01em;
+    }
+
+    .embed-code {
+      width: 100%;
+      min-height: 184px;
+      resize: vertical;
+      padding: 16px;
+      border: 1px solid rgba(17, 17, 17, 0.16);
+      border-radius: 16px;
+      background: #ffffff;
+      color: var(--ts-black);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.80rem;
+      line-height: 1.45;
+      white-space: pre;
+      box-shadow:
+        inset 0 1px 0 rgba(17, 17, 17, 0.04),
+        0 10px 24px rgba(17, 17, 17, 0.04);
+    }
+
+    .copy-button {
+      flex: 0 0 auto;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ts-green);
+      color: #ffffff;
+      font-family: var(--font-subtitle);
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .copy-button:hover {
+      transform: translateY(-1px);
+      background: var(--ts-black);
+    }
+
+    .note {
+      margin: 10px 0 0;
+      color: rgba(17, 17, 17, 0.58);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      padding: 18px 20px;
+      border-left: 5px solid var(--ts-green);
+      border-radius: 18px;
+      background: #ffffff;
+      color: rgba(17, 17, 17, 0.70);
+      box-shadow: 0 14px 34px rgba(17, 17, 17, 0.07);
+    }
+
+    .footer-note strong {
+      color: var(--ts-black);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        width: min(100% - 22px, 1220px);
+        padding-top: 24px;
+      }
+
+      .hero {
+        border-radius: 24px;
+      }
+
+      .quick-links {
+        position: static;
+        border-radius: 22px;
+      }
+
+      .map-card {
+        border-radius: 22px;
+      }
+
+      .map-card-header {
+        grid-template-columns: 1fr;
+      }
+
+      .map-tag {
+        justify-self: start;
+      }
+
+      .map-preview {
+        height: 580px;
+      }
+
+      .embed-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .embed-code {
+        min-height: 230px;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <span class="eyebrow">Treball Solidari</span>
+        <h1>Mapas de cooperación</h1>
+        <p>
+          Página técnica para revisar los mapas interactivos de cooperación y copiar el código
+          de incrustación para WordPress. Cada mapa puede insertarse de forma independiente
+          mediante un bloque HTML personalizado.
+        </p>
+      </div>
+    </section>
+
+    <nav class="quick-links" aria-label="Navegación rápida">
+      <a href="#globo">Globo global</a>
+      <a href="#nicaragua">Nicaragua</a>
+      <a href="#guatemala">Guatemala</a>
+      <a href="#burkina-faso">Burkina Faso</a>
+      <a href="#senegal">Senegal</a>
+      <a href="#el-salvador">El Salvador</a>
+    </nav>
+
+    <section id="maps-container"></section>
+
+    <div class="footer-note">
+      <strong>Uso recomendado:</strong> copiar el bloque HTML del mapa correspondiente y pegarlo
+      en WordPress dentro de un bloque “HTML personalizado”.
+    </div>
+  
+    <div class="footer-note">
+      <strong>Mantenimiento institucional:</strong>
+      <a href="manual.html" style="color:#405943;font-weight:900;">abrir el manual de gestión con ChatGPT/Codex</a>.
+    </div>
+
+  </main>
+
+  <script>
+    /*
+      Cuando publiques en Vercel, puedes dejar esto como está.
+      Si abres este index con doble clic, el código de WordPress mostrará este placeholder.
+    */
+    const VERCEL_BASE_URL = "https://TU-PROYECTO.vercel.app";
+
+    const maps = [
+      {
+        id: "globo",
+        tag: "Global",
+        title: "Globo de cooperación",
+        description: "Vista global de los países de intervención y presencia estratégica de Treball Solidari.",
+        path: "/globo/",
+        localPath: "globo/index.html",
+        heightDesktop: 680,
+        heightMobile: 580,
+        iframeTitle: "Globo interactivo de cooperación de Treball Solidari"
+      },
+      {
+        id: "nicaragua",
+        tag: "País",
+        title: "Mapa territorial de Nicaragua",
+        description: "Mapa territorial centrado en Madriz y el Corredor Seco.",
+        path: "/paises/?pais=nicaragua",
+        localPath: "paises/index.html?pais=nicaragua",
+        heightDesktop: 620,
+        heightMobile: 560,
+        iframeTitle: "Mapa territorial de Nicaragua - Treball Solidari"
+      },
+      {
+        id: "guatemala",
+        tag: "País",
+        title: "Mapa territorial de Guatemala",
+        description: "Mapa de las plataformas occidental y norte de intervención.",
+        path: "/paises/?pais=guatemala",
+        localPath: "paises/index.html?pais=guatemala",
+        heightDesktop: 620,
+        heightMobile: 560,
+        iframeTitle: "Mapa territorial de Guatemala - Treball Solidari"
+      },
+      {
+        id: "burkina-faso",
+        tag: "País",
+        title: "Mapa territorial de Burkina Faso",
+        description: "Mapa regional con zonas de intervención urbana, rural y de referencia histórica.",
+        path: "/paises/?pais=burkina-faso",
+        localPath: "paises/index.html?pais=burkina-faso",
+        heightDesktop: 620,
+        heightMobile: 560,
+        iframeTitle: "Mapa territorial de Burkina Faso - Treball Solidari"
+      },
+      {
+        id: "senegal",
+        tag: "País",
+        title: "Mapa territorial de Senegal",
+        description: "Mapa regional con las zonas prioritarias de intervención.",
+        path: "/paises/?pais=senegal",
+        localPath: "paises/index.html?pais=senegal",
+        heightDesktop: 620,
+        heightMobile: 560,
+        iframeTitle: "Mapa territorial de Senegal - Treball Solidari"
+      },
+      {
+        id: "el-salvador",
+        tag: "País",
+        title: "Mapa territorial de El Salvador",
+        description: "Mapa de las plataformas central y oriental de intervención.",
+        path: "/paises/?pais=el-salvador",
+        localPath: "paises/index.html?pais=el-salvador",
+        heightDesktop: 620,
+        heightMobile: 560,
+        iframeTitle: "Mapa territorial de El Salvador - Treball Solidari"
+      }
+    ];
+
+    const container = document.getElementById("maps-container");
+
+    function isFileMode() {
+      return window.location.protocol === "file:" || window.location.origin === "null";
+    }
+
+    function getPreviewUrl(map) {
+      if (isFileMode()) {
+        return map.localPath;
+      }
+
+      return map.path;
+    }
+
+    function getEmbedBaseUrl() {
+      if (isFileMode()) {
+        return VERCEL_BASE_URL;
+      }
+
+      return window.location.origin;
+    }
+
+    function getEmbedCode(map) {
+      const url = `${getEmbedBaseUrl()}${map.path}`;
+
+      return `<div class="ts-map-embed">
+  <iframe
+    src="${url}"
+    title="${map.iframeTitle}"
+    loading="lazy">
+  </iframe>
+</div>
+
+<style>
+  .ts-map-embed iframe {
+    display: block;
+    width: 100%;
+    height: ${map.heightDesktop}px;
+    border: 0;
+  }
+
+  @media (max-width: 768px) {
+    .ts-map-embed iframe {
+      height: ${map.heightMobile}px;
+    }
+  }
+</style>`;
+    }
+
+    function render() {
+      container.innerHTML = maps.map((map) => {
+        const previewUrl = getPreviewUrl(map);
+        const embedCode = getEmbedCode(map);
+
+        return `
+          <article class="map-card" id="${map.id}">
+            <header class="map-card-header">
+              <div>
+                <h2>${map.title}</h2>
+                <p>${map.description}</p>
+              </div>
+
+              <span class="map-tag">${map.tag}</span>
+            </header>
+
+            <div class="map-frame-wrap">
+              <iframe
+                class="map-preview"
+                src="${previewUrl}"
+                title="${map.iframeTitle}"
+                loading="lazy">
+              </iframe>
+            </div>
+
+            <div class="embed-block">
+              <div class="embed-header">
+                <label for="embed-${map.id}">Código para incrustar en WordPress</label>
+                <button class="copy-button" type="button" data-copy="embed-${map.id}">
+                  Copiar código
+                </button>
+              </div>
+
+              <textarea id="embed-${map.id}" class="embed-code" readonly>${embedCode}</textarea>
+
+              <p class="note">
+                Pega este código en WordPress usando un bloque “HTML personalizado”.
+                Si estás probando en local desde archivo, sustituye
+                <strong>${VERCEL_BASE_URL}</strong> por la URL real de Vercel cuando esté publicado.
+              </p>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    render();
+
+    document.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-copy]");
+      if (!button) return;
+
+      const id = button.getAttribute("data-copy");
+      const textarea = document.getElementById(id);
+      if (!textarea) return;
+
+      textarea.select();
+      textarea.setSelectionRange(0, 999999);
+
+      try {
+        await navigator.clipboard.writeText(textarea.value);
+        button.textContent = "Copiado";
+        setTimeout(() => {
+          button.textContent = "Copiar código";
+        }, 1500);
+      } catch {
+        document.execCommand("copy");
+        button.textContent = "Copiado";
+        setTimeout(() => {
+          button.textContent = "Copiar código";
+        }, 1500);
+      }
+    });
+  </script>
+</body>
+</html>
