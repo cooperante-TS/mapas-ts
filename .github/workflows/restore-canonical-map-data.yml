@@ -1,0 +1,51 @@
+name: Restore canonical Mapas data
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/restore-canonical-map-data.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact canonical GeoJSON files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p globo/data paises/data
+          curl -fL --retry 3 'https://raw.githubusercontent.com/johan/world.geo.json/0cd701afcecfaeaf95113d742c7c8c09bd9556a4/countries.geo.json' -o globo/data/countries.geo.json
+          curl -fL --retry 3 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/NIC/ADM1/geoBoundaries-NIC-ADM1_simplified.geojson' -o paises/data/nicaragua-adm1.geojson
+          curl -fL --retry 3 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/GTM/ADM1/geoBoundaries-GTM-ADM1_simplified.geojson' -o paises/data/guatemala-adm1.geojson
+          curl -fL --retry 3 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/BFA/ADM1/geoBoundaries-BFA-ADM1_simplified.geojson' -o paises/data/burkina-faso-adm1.geojson
+          curl -fL --retry 3 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/SEN/ADM1/geoBoundaries-SEN-ADM1_simplified.geojson' -o paises/data/senegal-adm1.geojson
+          curl -fL --retry 3 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/SLV/ADM1/geoBoundaries-SLV-ADM1_simplified.geojson' -o paises/data/el-salvador-adm1.geojson
+      - name: Verify against the archived TS reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'bc2356a26a2976f98e4aaf1b24c5693d5a4dc9b6178aeb952dbafbcd42c73bcd  globo/data/countries.geo.json' | sha256sum -c -
+          echo '720254f5a74bfef3ba0348b2abf1caf25ef33fed74c6d3d1e4e52a8e013a828d  paises/data/nicaragua-adm1.geojson' | sha256sum -c -
+          echo '7f84a4e2a8773953af1c602c67f27457b093e3cfc6ab21052446b172b71d7628  paises/data/guatemala-adm1.geojson' | sha256sum -c -
+          echo '651c170ce5570e020448e9ba29c69a749a40d663f06ba4114ddee561bfdce670  paises/data/burkina-faso-adm1.geojson' | sha256sum -c -
+          echo 'ea2855a2882503b7ed479b3341168002a47035107e423366cb086f401950a57d  paises/data/senegal-adm1.geojson' | sha256sum -c -
+          echo 'a0486e6e2cfde45665a046333f3375f35f97b0e880f974dfb4cc9afb9e590cad  paises/data/el-salvador-adm1.geojson' | sha256sum -c -
+      - name: Commit canonical data into institutional repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'cooperante-TS'
+          git config user.email 'cooperante@treballsolidari.org'
+          git add globo/data/countries.geo.json paises/data/*.geojson
+          if git diff --cached --quiet; then
+            echo 'Canonical files already present.'
+            exit 0
+          fi
+          git commit -m 'Restore exact canonical Mapas GeoJSON data'
+          git push
