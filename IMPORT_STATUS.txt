@@ -1,12 +1,19 @@
-Canonical source package verified on 2026-09-15 against the user-supplied ts-mapas-vercel archive.
+FINAL INSTITUTIONAL STATUS — 2026-09-15
 
-Runtime restoration status:
-- root landing page restored from the archived version;
-- /globo/ and /paises/ keep the archived HTML/CSS/JavaScript behavior;
-- canonical full world geometry is loaded from the exact pinned source revision used by the archive, with the institutional lightweight local copy retained only as fallback;
-- canonical ADM1 geometry for Nicaragua, Guatemala, Burkina Faso, Senegal and El Salvador is loaded from the exact pinned geoBoundaries revision used by the archive, with institutional lightweight local copies retained only as fallback;
-- original ODS assets are being retained/restored from the archive;
-- .vercel personal metadata is intentionally excluded;
-- institutional documentation and recovery files remain in the repository.
+Canonical source restored and production validated by the user.
 
-Cloudflare Pages production validation remains pending until the redeploy from main is visually checked.
+Current state:
+- production: https://mapas-ts.pages.dev/
+- repository: cooperante-TS/mapas-ts
+- hosting: Cloudflare Pages
+- root landing page restored from the canonical archive;
+- /globo/ and /paises/ restored;
+- full canonical world GeoJSON stored locally in globo/data/;
+- full canonical ADM1 GeoJSON files stored locally in paises/data/;
+- runtime no longer redirects GeoJSON requests to external GitHub sources;
+- one-time restoration workflow removed after successful restoration;
+- ODS assets and navigation retained;
+- .vercel personal metadata intentionally excluded;
+- institutional documentation and recovery copies retained in GitHub/Drive.
+
+Mapas TS is considered transferred and operational. This file is informational only; README.md and docs/MANUAL_GESTION.md are the current maintenance references.
