@@ -1,15 +1,12 @@
-Canonical source package verified on 2026-09-14.
+Canonical source package verified on 2026-09-15 against the user-supplied ts-mapas-vercel archive.
 
-Imported and versioned:
-- root landing page;
-- /globo/ entrypoint, CSS and JavaScript;
-- /paises/ entrypoint, CSS and mapa-pais.js;
-- web-optimized ADM1 GeoJSON for El Salvador, Nicaragua, Guatemala, Senegal and Burkina Faso;
-- lightweight local globe GeoJSON containing the five countries that are interactive in the TS globe;
-- all 12 required ODS deployment assets in both /globo/assets/ods/ and /paises/assets/ods/.
+Runtime restoration status:
+- root landing page restored from the archived version;
+- /globo/ and /paises/ keep the archived HTML/CSS/JavaScript behavior;
+- canonical full world geometry is loaded from the exact pinned source revision used by the archive, with the institutional lightweight local copy retained only as fallback;
+- canonical ADM1 geometry for Nicaragua, Guatemala, Burkina Faso, Senegal and El Salvador is loaded from the exact pinned geoBoundaries revision used by the archive, with institutional lightweight local copies retained only as fallback;
+- original ODS assets are being retained/restored from the archive;
+- .vercel personal metadata is intentionally excluded;
+- institutional documentation and recovery files remain in the repository.
 
-The exact canonical originals, including the full world GeoJSON and original ODS PNG files, remain archived and verified in institutional Google Drive. Selected large web assets are intentionally optimized derivatives for deployment and do not replace those canonical originals.
-
-Source import to the institutional GitHub repository is complete. Non-essential archival documentation remains in institutional Drive and is not required for deployment.
-
-Production cutover has not been performed because the Cloudflare account is not exposed through the currently connected tools.
+Cloudflare Pages production validation remains pending until the redeploy from main is visually checked.
