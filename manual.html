@@ -7,46 +7,15 @@
 <style>
 :root{--g:#405943;--l:#d8d300;--c:#f6f7ef;--t:#111}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--c);color:var(--t)}
-main{width:min(940px,calc(100% - 32px));margin:auto;padding:40px 0 70px}
-.hero{background:var(--g);color:#fff;border-radius:28px;padding:36px;box-shadow:0 20px 55px #0002}
-.badge{display:inline-block;background:var(--l);color:var(--g);font-weight:900;padding:7px 11px;border-radius:999px}
-h1{font-size:clamp(2rem,6vw,4.5rem);line-height:.95;margin:18px 0 12px}h2{margin-top:0}
-.card{background:white;border:1px solid #0001;border-radius:20px;padding:24px;margin-top:20px;box-shadow:0 10px 30px #0000000e}
-code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-pre{white-space:pre-wrap;background:#111;color:#f7f7f7;padding:18px;border-radius:14px;line-height:1.5;overflow:auto}
-a{color:var(--g);font-weight:800}
-.warn{border-left:5px solid var(--l)}
+main{width:min(940px,calc(100% - 32px));margin:auto;padding:40px 0 70px}.hero{background:var(--g);color:#fff;border-radius:28px;padding:36px;box-shadow:0 20px 55px #0002}.badge{display:inline-block;background:var(--l);color:var(--g);font-weight:900;padding:7px 11px;border-radius:999px}h1{font-size:clamp(2rem,6vw,4.5rem);line-height:.95;margin:18px 0 12px}h2{margin-top:0}.card{background:white;border:1px solid #0001;border-radius:20px;padding:24px;margin-top:20px;box-shadow:0 10px 30px #0000000e}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}pre{white-space:pre-wrap;background:#111;color:#f7f7f7;padding:18px;border-radius:14px;line-height:1.5;overflow:auto}a{color:var(--g);font-weight:800}.warn{border-left:5px solid var(--l)}
 </style>
 </head>
 <body><main>
-<section class="hero">
-<span class="badge">TREBALL SOLIDARI · MAPAS</span>
-<h1>Manual de gestión con ChatGPT/Codex</h1>
-<p>Guía operativa para mantener los mapas sin depender de la persona que los desarrolló originalmente.</p>
-</section>
-
-<section class="card"><h2>Flujo seguro</h2>
-<p>Describe el cambio → trabaja en una rama → revisa la preview → comprueba móvil y escritorio → fusiona → verifica producción.</p>
-</section>
-
-<section class="card warn"><h2>No hacer</h2>
-<p>No pegar contraseñas o tokens en el código. No editar GeoJSON sin comprobar los nombres de las regiones. No publicar directamente sin preview. No volver a vincular el proyecto a una cuenta personal.</p>
-</section>
-
-<section class="card"><h2>Prompt para un cambio</h2>
-<pre>Lee AGENTS.md, README.md y docs/ antes de modificar Mapas TS. Quiero [describe el cambio]. Mantén el sitio estático, no añadas secretos y conserva el comportamiento móvil. Trabaja en una rama, comprueba las rutas y el JavaScript y prepara una Pull Request con instrucciones de prueba.</pre>
-</section>
-
-<section class="card"><h2>Dónde está cada cosa</h2>
-<p><strong>Globo:</strong> globo/assets/globo.js</p>
-<p><strong>Mapas de país:</strong> paises/assets/mapa-pais.js</p>
-<p><strong>Geometrías:</strong> globo/data/ y paises/data/</p>
-<p><strong>Iconos ODS:</strong> assets/ods/</p>
-<p><strong>Portada y embeds:</strong> index.html</p>
-</section>
-
-<section class="card"><h2>Antes de aprobar</h2>
-<p>Comprueba el globo, los cinco países, las fichas de región, los ODS, el responsive, la consola del navegador y que los iframes usen el dominio institucional correcto.</p>
-<p><a href="./">← Volver a Mapas TS</a></p>
-</section>
+<section class="hero"><span class="badge">TREBALL SOLIDARI · MAPAS</span><h1>Manual sencillo de Mapas TS</h1><p>Si los mapas funcionan, no necesitan mantenimiento diario. Esta guía explica qué hacer cuando haya que cambiar algo sin conocer programación.</p></section>
+<section class="card"><h2>Producción institucional</h2><p><strong>https://mapas-ts.pages.dev/</strong></p><p>Rutas principales: portada, <code>/globo/</code> y <code>/paises/</code>.</p></section>
+<section class="card"><h2>Pedir un cambio a ChatGPT/Codex</h2><pre>Trabaja sobre cooperante-TS/mapas-ts. Lee README.md, AGENTS.md y docs/ antes de modificar nada. Quiero este cambio: [DESCRIBIR]. Mantén las rutas públicas, el aspecto actual, los GeoJSON canónicos y el comportamiento móvil. No simplifiques ni sustituyas geometrías salvo que sea imprescindible. Haz el cambio de forma reversible y comprueba la web antes de terminar.</pre></section>
+<section class="card warn"><h2>No hacer</h2><p>No sustituir GeoJSON por versiones descargadas al azar o simplificadas. No borrar datos geográficos. No pegar contraseñas o tokens. No editar producción manualmente en Cloudflare. No vincular el proyecto a cuentas personales.</p></section>
+<section class="card"><h2>Qué comprobar después de un cambio</h2><ul><li>La portada carga.</li><li>El globo abre y responde.</li><li>Los mapas de país cargan.</li><li>Las regiones afectadas se colorean y abren su ficha.</li><li>Los iconos ODS aparecen.</li><li>Funciona en móvil y ordenador.</li></ul></section>
+<section class="card"><h2>Si una modificación rompe la web</h2><p>No sigas haciendo cambios al azar. Restaura el último commit estable del repositorio institucional y deja que Cloudflare Pages vuelva a desplegarlo automáticamente.</p></section>
+<section class="card"><h2>Dónde está cada cosa</h2><p><strong>Repositorio:</strong> cooperante-TS/mapas-ts</p><p><strong>Globo:</strong> globo/assets/globo.js</p><p><strong>Mapas de país:</strong> paises/assets/mapa-pais.js</p><p><strong>Geometrías:</strong> globo/data/ y paises/data/</p><p><strong>Backups:</strong> carpeta Mapas TS del Drive institucional</p><p><a href="./">← Volver a Mapas TS</a></p></section>
 </main></body></html>
